@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 
 import { projectFirestore } from '../firebase/config';
 
+import { useAuthContext } from '../hooks/useAuthContext';
+
 import ScheduleList from '../components/ScheduleList';
 
 import Skeleton from '../components/Skeleton';
+import Admin from './Admin';
 
 export default function Schedules() {
+  const { user } = useAuthContext();
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
@@ -48,10 +52,15 @@ export default function Schedules() {
           Check your current sessions available and new requests.
         </p>
       </div>
-
+      {/* Logic to display the schedules from firebase based on the user vs admin user */}
       {error && <p className="error text-center p-2 m-2">{error}</p>}
       {isPending && <Skeleton />}
-      {data && <ScheduleList schedules={data} />}
+      {user.uid === 'e3vSvKVNjANFfBVxX318pqzbrT63' && data && (
+        <Admin schedules={data} />
+      )}
+      {!(user.uid === 'e3vSvKVNjANFfBVxX318pqzbrT63') && data && (
+        <ScheduleList schedules={data} />
+      )}
 
       {/* Assistance Session */}
       <div className="text-center container mx-auto my-4 rounded-sm border shadow p-2">
