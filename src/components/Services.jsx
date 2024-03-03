@@ -23,16 +23,16 @@ export default function Services() {
           </p>
           <div className="flex items-center space-x-4">
             <button type="submit" className="button">
-              <Link to="/request">Request</Link>
+              <Link to="/signup">Start using</Link>
             </button>
-            <a
+            <p
               href="/"
               aria-label=""
               className="inline-flex items-center font-semibold transition-colors 
-            duration-200 text-accent hover:text-secondary"
+            duration-200 text-secondary"
             >
-              <Link to="/schedule">Availability</Link>
-            </a>
+              Simplify your life with Scheduler
+            </p>
           </div>
         </header>
         <div className="grid gap-5 row-gap-5 sm:grid-cols-2 lg:w-1/2">

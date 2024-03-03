@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import Error404 from '/assets/404.svg';
+import { useEffect } from 'react';
 
 export default function ErrorPage() {
   const navigate = useNavigate();

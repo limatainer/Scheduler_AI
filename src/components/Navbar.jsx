@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -12,8 +12,14 @@ import { TfiClose } from 'react-icons/tfi';
 export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   return (
     <div
@@ -26,30 +32,16 @@ export default function Navbar() {
             className="font-medium tracking-wide text-gray-700 
               transition-colors duration-200 hover:text-secondary"
           >
-            <Link to="/">Home</Link>
-          </li>
-          <li
-            className="font-medium tracking-wide text-gray-700 
-              transition-colors duration-200 hover:text-secondary"
-          >
-            <Link to="/schedule">Schedule</Link>
+            <Link to="/">
+              Home
+              <GrSchedulePlay
+                className="inline-flex items-center ml-2 text-xl 
+        font-bold tracking-wide text-gray-800 uppercase"
+              />
+            </Link>
           </li>
         </ul>
-        <Link to="/">
-          <GrSchedulePlay
-            className="inline-flex items-center ml-2 text-xl 
-        font-bold tracking-wide text-gray-800 uppercase"
-          />
-        </Link>
-
         <ul className="items-center hidden space-x-8 lg:flex">
-          <li
-            className="font-medium tracking-wide text-gray-700 
-            transition-colors duration-200 hover:text-secondary"
-          >
-            <Link to="/request">Request</Link>
-          </li>
-
           {/* If user condition */}
           {!user && (
             <>
@@ -74,6 +66,18 @@ export default function Navbar() {
             transition-colors duration-200 "
               >
                 Hello, {user.displayName}
+              </li>
+              <li
+                className="font-medium tracking-wide text-gray-700 
+            transition-colors duration-200 hover:text-secondary"
+              >
+                <Link to="/request">Request Appointment</Link>
+              </li>
+              <li
+                className="font-medium tracking-wide text-gray-700 
+              transition-colors duration-200 hover:text-secondary"
+              >
+                <Link to="/schedule">My Schedules</Link>
               </li>
               <li
                 className="font-medium tracking-wide text-gray-700 
@@ -131,24 +135,7 @@ export default function Navbar() {
                     >
                       <Link to="/">Home</Link>
                     </li>
-                    <li
-                      onClick={() => setIsMenuOpen(false)}
-                      className="inline-flex items-center justify-center w-full 
-                    h-12 px-6 font-medium tracking-wide transition duration-200 
-                    rounded shadow-md hover:bg-secondary 
-                    focus:shadow-outline focus:outline-none"
-                    >
-                      <Link to="/schedule">Schedule</Link>
-                    </li>
-                    <li
-                      onClick={() => setIsMenuOpen(false)}
-                      className="inline-flex items-center justify-center w-full 
-                    h-12 px-6 font-medium tracking-wide transition duration-200 
-                    rounded shadow-md hover:bg-secondary 
-                    focus:shadow-outline focus:outline-none"
-                    >
-                      <Link to="/request">Request</Link>
-                    </li>
+
                     {/* If user condition */}
                     {!user && (
                       <>
@@ -181,6 +168,24 @@ export default function Navbar() {
                           focus:shadow-outline focus:outline-none"
                         >
                           Hello, {user.displayName}
+                        </li>
+                        <li
+                          onClick={() => setIsMenuOpen(false)}
+                          className="inline-flex items-center justify-center w-full 
+                    h-12 px-6 font-medium tracking-wide transition duration-200 
+                    rounded shadow-md hover:bg-secondary 
+                    focus:shadow-outline focus:outline-none"
+                        >
+                          <Link to="/schedule">Schedule</Link>
+                        </li>
+                        <li
+                          onClick={() => setIsMenuOpen(false)}
+                          className="inline-flex items-center justify-center w-full 
+                    h-12 px-6 font-medium tracking-wide transition duration-200 
+                    rounded shadow-md hover:bg-secondary 
+                    focus:shadow-outline focus:outline-none"
+                        >
+                          <Link to="/request">Request</Link>
                         </li>
                         <li
                           className="inline-flex items-center justify-center w-full 

@@ -25,6 +25,7 @@ import Schedules from './routes/Schedules';
 import Requester from './routes/Requester';
 import Login from './routes/Login';
 import Signup from './routes/Signup';
+import HomeUser from './routes/HomeUser';
 
 const ProtectedRoute = ({ element }) => {
   const { user } = useAuthContext();
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/homeuser',
+        element: <HomeUser />,
       },
       {
         path: '/request',

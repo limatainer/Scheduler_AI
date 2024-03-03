@@ -4,10 +4,10 @@ import { projectFirestore } from '../firebase/config';
 
 import { useAuthContext } from '../hooks/useAuthContext';
 
+import Admin from '../components/Admin';
 import ScheduleList from '../components/ScheduleList';
 
 import Skeleton from '../components/Skeleton';
-import Admin from './Admin';
 
 export default function Schedules() {
   const { user } = useAuthContext();
