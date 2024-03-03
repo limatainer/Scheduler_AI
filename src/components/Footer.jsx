@@ -3,7 +3,7 @@ import { GrSchedules } from 'react-icons/gr';
 
 export default function Footer() {
   return (
-    <footer className=" bg-secondary text-white p-4">
+    <footer className="mt-72 bg-secondary text-white p-4">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <div className="text-center md:text-left mb-4 md:mb-0">
           <p className="text-lg font-semibold">Mail: thefactory@fact.com</p>

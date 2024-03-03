@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { projectFirestore } from '../firebase/config';
 
-import Stats from '../components/Stats';
-import Steps from '../components/Steps';
 import Review from '../components/Review';
 
 export default function HomeUser() {
@@ -40,14 +38,14 @@ export default function HomeUser() {
   // AFTER LOADED IT WILL PASS DATA TO REVIEW COMPONENT AS REVIEWS
   return (
     <>
-      <Stats />
       <h1>Welcome back user</h1>
+      <p>Action tools</p>
+
       <div className="text-center">
         {error && <p className="text-accent">{error}</p>}
         {isPending && <p className="text-primary">Loading...</p>}
         {data && <Review reviews={data} />}
       </div>
-      <Steps />
     </>
   );
 }
