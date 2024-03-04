@@ -28,23 +28,21 @@ export default function Navbar() {
     >
       <div className="relative flex items-center justify-between lg:justify-center lg:space-x-16">
         <ul className="items-center hidden space-x-8 lg:flex">
-          <li
-            className="font-medium tracking-wide text-gray-700 
-              transition-colors duration-200 hover:text-secondary"
-          >
-            <Link to="/">
-              Home
-              <GrSchedulePlay
-                className="inline-flex items-center ml-2 text-xl 
-        font-bold tracking-wide text-gray-800 uppercase"
-              />
-            </Link>
-          </li>
-        </ul>
-        <ul className="items-center hidden space-x-8 lg:flex">
           {/* If user condition */}
           {!user && (
             <>
+              <li
+                className="font-medium tracking-wide text-gray-700 
+              transition-colors duration-200 hover:text-secondary"
+              >
+                <Link to="/">
+                  Home
+                  <GrSchedulePlay
+                    className="inline-flex items-center ml-2 text-xl 
+        font-bold tracking-wide text-gray-800 uppercase"
+                  />
+                </Link>
+              </li>
               <li
                 className="font-medium tracking-wide text-gray-700 
             transition-colors duration-200 hover:text-secondary"
@@ -62,22 +60,35 @@ export default function Navbar() {
           {user && (
             <>
               <li
-                className="font-medium tracking-wide text-gray-700 
+                className="font-bold text-2xl tracking-wide text-tertiary 
             transition-colors duration-200 "
               >
                 Hello, {user.displayName}
               </li>
               <li
                 className="font-medium tracking-wide text-gray-700 
+              transition-colors duration-200 hover:text-secondary"
+              >
+                <Link to="/">
+                  Dashboard
+                  <GrSchedulePlay
+                    className="inline-flex items-center ml-2 text-xl 
+        font-bold tracking-wide text-gray-800 uppercase"
+                  />
+                </Link>
+              </li>
+
+              <li
+                className="font-medium tracking-wide text-gray-700 
             transition-colors duration-200 hover:text-secondary"
               >
-                <Link to="/request">Request Appointment</Link>
+                <Link to="/request">New Appointment</Link>
               </li>
               <li
                 className="font-medium tracking-wide text-gray-700 
               transition-colors duration-200 hover:text-secondary"
               >
-                <Link to="/schedule">My Schedules</Link>
+                <Link to="/schedule">My Requests</Link>
               </li>
               <li
                 className="font-medium tracking-wide text-gray-700 
