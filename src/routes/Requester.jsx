@@ -67,51 +67,67 @@ export default function Requester() {
   };
 
   return (
-    <section className="py-6 px-8 rounded-md shadow-md md:flex md:justify-center md:gap-8">
-      {/* Calendar */}
-      <Calendar />
-      {/* Request Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-xs mx-auto md:max-w-full md:mx-0 md:ml-8 md:self-start"
-      >
-        <label className="block mb-4">
-          {/* <span className="mb-1">Pick a date </span> */}
-          <DatePicker
-            placeholderText=" Pick a date "
-            showIcon
-            isClearable
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            dateFormat="MMMM d, yyyy h:mm aa"
-            selected={selectedDate}
-            onChange={handleDateChange}
-            minDate={today}
-            maxDate={endOfYear}
-            minTime={minTime}
-            maxTime={maxTime}
-            className="block w-full rounded-md shadow-sm focus:ring focus:ring-primary focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span>Send a personalized message:</span>
-          <textarea
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
-            required
-            rows="3"
-            className=" w-full rounded-sm shadow-sm focus:ring focus:ring-primary focus:ring-opacity-50"
-          ></textarea>
-        </label>
+    <>
+      <div className="container mx-auto shadow m-2 p-4">
+        <h1 className="text-4xl font-bold text-center mb-4">
+          Select a date from the calendar.
+        </h1>
+        <p className="text-center m-4 p-2">
+          The dates in yellow indicates that will require approval.
+        </p>
+        <p className="text-center m-4 p-2">
+          The dates in red indicates that all slots are already full.
+        </p>
+      </div>
+      <section className="py-6 px-8 rounded-md shadow-md md:flex md:justify-center md:gap-8">
+        {/* Calendar */}
+        <Calendar />
+        {/* Request Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-xs mx-auto md:max-w-full md:mx-0 md:ml-8 md:self-start mt-4"
+        >
+          <label className="block mb-4">
+            {/* <span className="mb-1">Pick a date </span> */}
+            <DatePicker
+              placeholderText=" Pick a date "
+              showIcon
+              isClearable
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              selected={selectedDate}
+              onChange={handleDateChange}
+              minDate={today}
+              maxDate={endOfYear}
+              minTime={minTime}
+              maxTime={maxTime}
+              className="w-full rounded-md shadow-sm focus:ring focus:ring-tertiary focus:ring-opacity-50 border-2 border-tertiary text-gray-800 placeholder-gray-400 p-2"
+            />
+          </label>
+          <label className="block mb-4">
+            <span className="text-tertiary mb-1 block">
+              Send a personalized message:
+            </span>
+            <textarea
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
+              required
+              rows="3"
+              className="w-full rounded-md shadow-sm focus:ring focus:ring-tertiary focus:ring-opacity-50 border-2 border-tertiary text-gray-800 placeholder-gray-400 p-2"
+              placeholder="Type your message here..."
+            ></textarea>
+          </label>
 
-        {response.isPending && <p>Loading...</p>}
-        {response.error && <p className="text-red-500">{response.error}</p>}
+          {response.isPending && <p>Loading...</p>}
+          {response.error && <p className="text-accent">{response.error}</p>}
 
-        <button type="submit" className="button self-center">
-          Submit
-        </button>
-      </form>
-    </section>
+          <button type="submit" className="button self-center">
+            Submit
+          </button>
+        </form>
+      </section>
+    </>
   );
 }

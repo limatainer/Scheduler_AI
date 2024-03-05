@@ -107,7 +107,7 @@ export default function Navbar() {
             aria-label="Open Menu"
             title="Open Menu"
             className="p-2 -mr-1 transition duration-200 rounded focus:outline-none 
-            focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
+            focus:shadow-outline hover:bg-tertiary focus:bg-tertiary"
             onClick={() => setIsMenuOpen(true)}
           >
             <CiMenuBurger className="w-5 text-gray-600" />
@@ -116,7 +116,7 @@ export default function Navbar() {
           {/* Responsive Menu */}
 
           {isMenuOpen && (
-            <div className="absolute top-0 left-0 w-full">
+            <div className="absolute top-0 left-0 w-full z-50">
               <div className="p-5 bg-white border rounded shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <GrSchedulePlay

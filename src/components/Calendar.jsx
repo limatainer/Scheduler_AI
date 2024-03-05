@@ -68,8 +68,8 @@ export default function Calendar() {
     );
   };
   return (
-    <div className="hidden md:block max-w-xs">
-      <div className="mb-4">
+    <div className="md:w-1/2 max-w-xs mx-auto md:max-w-full md:mx-0 md:ml-8 md:self-start">
+      <div className="m-4">
         <h2 className="text-lg font-semibold">
           {currentMonth.toLocaleString('default', {
             month: 'long',
@@ -93,7 +93,7 @@ export default function Calendar() {
             key={day}
             className={`text-center text-sm font-medium rounded-md ${
               isDateTaken(day)
-                ? 'bg-red-500 text-white' // Change to red color for taken dates
+                ? 'bg-accent text-white' // Change to red color for taken dates
                 : day === new Date().getDate()
                 ? 'bg-secondary text-white'
                 : 'bg-primary'
