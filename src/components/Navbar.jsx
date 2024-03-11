@@ -28,7 +28,7 @@ export default function Navbar() {
     >
       <div className="relative flex items-center justify-between lg:justify-center lg:space-x-16">
         <ul className="items-center hidden space-x-8 lg:flex">
-          {/* If user condition */}
+          {/* If user conditions */}
           {!user && (
             <>
               <li
@@ -41,19 +41,20 @@ export default function Navbar() {
                     className="inline-flex items-center ml-2 text-xl 
         font-bold tracking-wide text-gray-800 uppercase"
                   />
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
                 </Link>
               </li>
-              <li
-                className="font-medium tracking-wide text-gray-700 
-            transition-colors duration-200 hover:text-secondary"
-              >
-                <Link to="/login">Login</Link>
+              <li className="font-medium tracking-wide text-gray-700 group transition duration-300">
+                <Link to="/login">
+                  Login{' '}
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                </Link>
               </li>
-              <li
-                className="font-medium tracking-wide text-gray-700 
-            transition-colors duration-200 hover:text-secondary"
-              >
-                <Link to="/signup">Signup</Link>
+              <li className="font-medium tracking-wide text-gray-700 group transition duration-300">
+                <Link to="/signup">
+                  Signup{' '}
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                </Link>
               </li>
             </>
           )}
@@ -61,39 +62,34 @@ export default function Navbar() {
             <>
               <li
                 className="font-bold text-2xl tracking-wide text-tertiary 
-            transition-colors duration-200 "
+            transition-colors duration-200"
               >
+                <GrSchedulePlay
+                  className="inline-flex items-center m-2 text-xl 
+        font-bold tracking-wide text-tertiary uppercase"
+                />
                 Hello, {user.displayName}
               </li>
-              <li
-                className="font-medium tracking-wide text-gray-700 
-              transition-colors duration-200 hover:text-secondary"
-              >
+              <li className="font-medium tracking-wide text-gray-700 group transition duration-300">
                 <Link to="/">
                   Dashboard
-                  <GrSchedulePlay
-                    className="inline-flex items-center ml-2 text-xl 
-        font-bold tracking-wide text-gray-800 uppercase"
-                  />
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
                 </Link>
               </li>
 
-              <li
-                className="font-medium tracking-wide text-gray-700 
-            transition-colors duration-200 hover:text-secondary"
-              >
-                <Link to="/request">New Appointment</Link>
+              <li className="font-medium tracking-wide text-gray-700 group transition duration-300">
+                <Link to="/request">
+                  New Appointment{' '}
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                </Link>
               </li>
-              <li
-                className="font-medium tracking-wide text-gray-700 
-              transition-colors duration-200 hover:text-secondary"
-              >
-                <Link to="/schedule">My Requests</Link>
+              <li className="font-medium tracking-wide text-gray-700 group transition duration-300">
+                <Link to="/schedule">
+                  My Requests{' '}
+                  <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                </Link>
               </li>
-              <li
-                className="font-medium tracking-wide text-gray-700 
-            transition-colors duration-200 hover:text-secondary"
-              >
+              <li className="font-medium tracking-wide text-gray-700 group transition duration-300">
                 <button className="button" onClick={logout}>
                   Logout
                 </button>
@@ -101,7 +97,7 @@ export default function Navbar() {
             </>
           )}
         </ul>
-
+        {/* Close menu button */}
         <div className="lg:hidden">
           <button
             aria-label="Open Menu"
@@ -112,9 +108,7 @@ export default function Navbar() {
           >
             <CiMenuBurger className="w-5 text-gray-600" />
           </button>
-
           {/* Responsive Menu */}
-
           {isMenuOpen && (
             <div className="absolute top-0 left-0 w-full z-50">
               <div className="p-5 bg-white border rounded shadow-sm">
@@ -134,19 +128,9 @@ export default function Navbar() {
                     <TfiClose className="w-5 text-gray-600" />
                   </button>
                 </div>
-
+                {/* Navigation */}
                 <nav>
                   <ul className="space-y-4">
-                    <li
-                      onClick={() => setIsMenuOpen(false)}
-                      className="inline-flex items-center justify-center w-full 
-                    h-12 px-6 font-medium tracking-wide transition duration-200 
-                    rounded shadow-md hover:bg-secondary 
-                    focus:shadow-outline focus:outline-none"
-                    >
-                      <Link to="/">Home</Link>
-                    </li>
-
                     {/* If user condition */}
                     {!user && (
                       <>
@@ -157,7 +141,10 @@ export default function Navbar() {
                     rounded shadow-md hover:bg-secondary 
                     focus:shadow-outline focus:outline-none"
                         >
-                          <Link to="/login">Login</Link>
+                          <Link to="/">
+                            Home
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                          </Link>
                         </li>
                         <li
                           onClick={() => setIsMenuOpen(false)}
@@ -166,7 +153,22 @@ export default function Navbar() {
                     rounded shadow-md hover:bg-secondary 
                     focus:shadow-outline focus:outline-none"
                         >
-                          <Link to="/signup">Signup</Link>
+                          <Link to="/login">
+                            Login{' '}
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                          </Link>
+                        </li>
+                        <li
+                          onClick={() => setIsMenuOpen(false)}
+                          className="inline-flex items-center justify-center w-full 
+                    h-12 px-6 font-medium tracking-wide transition duration-200 
+                    rounded shadow-md hover:bg-secondary 
+                    focus:shadow-outline focus:outline-none"
+                        >
+                          <Link to="/signup">
+                            Signup{' '}
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                          </Link>
                         </li>
                       </>
                     )}
@@ -187,7 +189,10 @@ export default function Navbar() {
                     rounded shadow-md hover:bg-secondary 
                     focus:shadow-outline focus:outline-none"
                         >
-                          <Link to="/schedule">Schedule</Link>
+                          <Link to="/homeuser">
+                            Dashboard
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                          </Link>
                         </li>
                         <li
                           onClick={() => setIsMenuOpen(false)}
@@ -196,7 +201,22 @@ export default function Navbar() {
                     rounded shadow-md hover:bg-secondary 
                     focus:shadow-outline focus:outline-none"
                         >
-                          <Link to="/request">Request</Link>
+                          <Link to="/schedule">
+                            Schedule{' '}
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                          </Link>
+                        </li>
+                        <li
+                          onClick={() => setIsMenuOpen(false)}
+                          className="inline-flex items-center justify-center w-full 
+                    h-12 px-6 font-medium tracking-wide transition duration-200 
+                    rounded shadow-md hover:bg-secondary 
+                    focus:shadow-outline focus:outline-none"
+                        >
+                          <Link to="/request">
+                            Request{' '}
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
+                          </Link>
                         </li>
                         <li
                           className="inline-flex items-center justify-center w-full 
@@ -204,9 +224,7 @@ export default function Navbar() {
                           rounded shadow-md hover:bg-secondary 
                           focus:shadow-outline focus:outline-none"
                         >
-                          <button className="button" onClick={logout}>
-                            Logout
-                          </button>
+                          <button onClick={logout}>Logout</button>
                         </li>
                       </>
                     )}

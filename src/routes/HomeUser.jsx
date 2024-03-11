@@ -6,7 +6,10 @@ import { Link } from 'react-router-dom';
 import Review from '../components/Review';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { AiOutlineClose, AiOutlineSchedule } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
+import { MdOutlineReviews, MdScheduleSend } from 'react-icons/md';
+import { VscGitPullRequestNewChanges } from 'react-icons/vsc';
+import Fruits from '../components/Fruits';
 
 export default function HomeUser() {
   const [data, setData] = useState(null);
@@ -49,23 +52,34 @@ export default function HomeUser() {
       id: 1,
       title: 'See your request',
       subtitle: 'Quick view here your current schedule',
+      icon: <MdScheduleSend className="text-4xl" />,
     },
-    { id: 2, title: 'New request', subtitle: 'Make a new request' },
-    { id: 3, title: 'Give us a review', subtitle: 'Write a review here' },
+    {
+      id: 2,
+      title: 'New request',
+      subtitle: 'Make a new request',
+      icon: <VscGitPullRequestNewChanges className="text-4xl" />,
+    },
+    {
+      id: 3,
+      title: 'Give us a review',
+      subtitle: 'Write a review here',
+      icon: <MdOutlineReviews className="text-4xl" />,
+    },
   ];
   const handleOverlayClick = (e) => {
     e.stopPropagation(); // Prevent the event from propagating to parent elements
   };
   return (
     <>
-      <div className="bg-primary sm:py-16 lg:py-25 pb-10">
+      <div className="bg-yellow-50 sm:py-16 lg:py-25 pb-10">
         <div
           className="flex flex-col justify-center items-center px-4 
         py-11 mx-auto max-w-screen-xl"
         >
           <div className="max-w-xl mb-10 text-center">
-            <h1 className="text-4xl font-bold rounded-md bg-gradient-to-r from-accent to-secondary animate-gradient">
-              Welcome
+            <h1 className="text-7xl font-bold ">
+              Welcome, <span className="text-tertiary">User</span>
             </h1>
             <h2
               className="max-w-lg mb-6 p-4 font-sans text-3xl font-bold 
@@ -99,19 +113,13 @@ export default function HomeUser() {
                     onClick={() =>
                       setSelectedId(selectedId === item.id ? null : item.id)
                     }
-                    className={`transform transition duration-500 hover:scale-110 
+                    className={`flex flex-col items-center justify-center transform transition duration-500 hover:scale-110 
                     group space-y-6 border border-gray-100 rounded-3xl bg-white 
                     px-8 py-12 text-center shadow-2xl shadow-gray-600/10 ${
                       selectedId === item.id ? 'z-10' : ''
                     }`}
                   >
-                    {/* Replace the src attribute with your actual image source */}
-                    <img
-                      className="animate__animated animate__jello mx-auto w-24"
-                      src="https://images.pexels.com/photos/5518867/pexels-photo-5518867.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                      alt="calendar img"
-                      loading="lazy"
-                    />
+                    {item.icon}
                     <h1 className="text-2xl font-semibold text-gray-800">
                       {item.title}
                     </h1>
@@ -167,6 +175,9 @@ export default function HomeUser() {
         {isPending && <p className="text-primary">Loading...</p>}
         {data && <Review reviews={data} />}
       </div>
+      {/* <div className="fruits">
+        <Fruits />
+      </div> */}
     </>
   );
 }

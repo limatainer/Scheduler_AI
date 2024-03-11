@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, error, isPending } = useLogin();
+  const { login, error, isPending, setError } = useLogin(); // Destructure error and setError from useLogin
 
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -19,6 +19,17 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Invalid email format. Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password is too short');
+      return;
+    }
+
     login(email, password);
   };
 
@@ -66,7 +77,17 @@ export default function Login() {
               Loading
             </button>
           )}
-          {error && <p>{error}</p>}
+          {error && error.includes('INVALID_LOGIN_CREDENTIALS') && (
+            <p className="text-2xl text-accent">Wrong user or password</p>
+          )}
+          {error && error === 'Password is too short' && (
+            <p className="text-red-500">{error}</p>
+          )}
+          {error &&
+            error ===
+              'Invalid email format. Please enter a valid email address.' && (
+              <p className="text-red-500">{error}</p>
+            )}
         </form>
       </div>
     </div>
