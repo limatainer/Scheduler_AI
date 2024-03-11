@@ -45,13 +45,13 @@ export default function Steps() {
             Navigate to our availability panel and check what time and date best
             fits you.
           </p>
-          <a
-            aria-label="Schedule page"
+          <Link
+            to="/schedule"
             className="inline-flex items-center font-semibold transition-colors 
   duration-200 text-accent hover:text-primary"
           >
-            <Link to="/schedule">Availability</Link>
-          </a>
+            Availability
+          </Link>
           <div className="top-0 right-0 flex items-center justify-center h-24 lg:-mr-8 lg:absolute">
             <FaArrowRightLong className="text-2xl" />
           </div>
@@ -66,15 +66,14 @@ export default function Steps() {
             compose a quick message, and hit submit. Within moments, you'll
             receive a confirmation.
           </p>
-          <a
-            href="/request"
-            target="_blank"
-            aria-label="Request page"
+
+          <Link
+            to="/request"
             className="inline-flex items-center font-semibold transition-colors 
             duration-200 hover:text-secondary"
           >
-            <Link to="/request">Request</Link>
-          </a>
+            Request
+          </Link>
           <div className="top-0 right-0 flex items-center justify-center h-24 lg:-mr-8 lg:absolute">
             <FaArrowRightLong className="text-2xl" />
           </div>

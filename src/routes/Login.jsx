@@ -51,6 +51,7 @@ export default function Login() {
                 value={email}
                 id="email"
                 placeholder="Email address"
+                autoComplete="username"
                 className="ml-2 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
               />
             </label>
@@ -62,6 +63,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 placeholder="Password"
+                autoComplete="current-password"
                 className="ml-2 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
               />
             </label>

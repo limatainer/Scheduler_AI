@@ -22,12 +22,10 @@ export default function Services() {
             forward to serving you with excellence!
           </p>
           <div className="flex items-center space-x-4">
-            <button type="submit" className="button">
-              <Link to="/signup">Start using</Link>
-            </button>
+            <Link to="/signup" className="button">
+              Start using
+            </Link>
             <p
-              href="/"
-              aria-label=""
               className="inline-flex items-center font-semibold transition-colors 
             duration-200 text-secondary"
             >

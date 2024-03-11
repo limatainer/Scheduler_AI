@@ -1,72 +1,93 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { projectFirestore } from '../firebase/config';
-export default function Calendar() {
-  // CALENDAR
+
+const Calendar = () => {
+  // State
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState(false);
-  //THIS USER EFFECT IS TO DISPLAY THE REVIEWS COLLECTION FROM FIRESTORE
-  useEffect(() => {
-    setIsPending(true);
+  const [error, setError] = useState(null);
 
-    const unsub = projectFirestore.collection('schedule').onSnapshot(
-      (snapshot) => {
+  // Fetch schedule data from Firestore
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      setIsPending(true);
+      try {
+        const snapshot = await projectFirestore.collection('schedule').get();
         if (snapshot.empty) {
           setError('No schedules to load');
-          setIsPending(false);
         } else {
-          let results = [];
-          snapshot.docs.forEach((doc) => {
-            // console.log(doc)
-            results.push({ ...doc.data(), id: doc.id });
-          });
+          const results = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
           setData(results);
-          setIsPending(false);
         }
-      },
-      (err) => {
-        setError(err.message);
+      } catch (error) {
+        setError(error.message);
+      } finally {
         setIsPending(false);
       }
-    );
+    };
 
-    return () => unsub();
+    fetchSchedule();
   }, []);
-  // AFTER LOADED IT WILL PASS DATA TO SCHEDULELIST COMPONENT AS SCHEDULES
 
-  const daysInMonth = new Date(
-    currentMonth.getFullYear(),
-    currentMonth.getMonth() + 1,
-    0
-  ).getDate();
+  // Memoized values
+  const daysInMonth = useMemo(
+    () =>
+      new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth() + 1,
+        0
+      ).getDate(),
+    [currentMonth]
+  );
+  const firstDayOfMonth = useMemo(
+    () =>
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay(),
+    [currentMonth]
+  );
+  const emptySlots = useMemo(
+    () => Array.from({ length: firstDayOfMonth }, (_, i) => i),
+    [firstDayOfMonth]
+  );
 
-  // Get the first day of the month
-  const firstDayOfMonth = new Date(
-    currentMonth.getFullYear(),
-    currentMonth.getMonth(),
-    1
-  ).getDay();
+  // Check if a date is taken
+  const isDateTaken = useMemo(() => {
+    if (!data) return () => false;
+    const formattedDates = data.map((schedule) =>
+      new Date(schedule.date.seconds * 1000).toLocaleDateString()
+    );
+    return (day) => {
+      const formattedDate = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth(),
+        day
+      ).toLocaleDateString();
+      return formattedDates.includes(formattedDate);
+    };
+  }, [data, currentMonth]);
 
-  // Create an array of days in the month
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-
-  // Create an array of empty slots for days before the first day of the month
-  const emptySlots = Array.from({ length: firstDayOfMonth }, (_, i) => i);
-
-  const isDateTaken = (day) => {
-    if (!data) return false;
-    const formattedDate = new Date(
+  // Handle day button click
+  const handleDayClick = (day) => {
+    const clickedDate = new Date(
       currentMonth.getFullYear(),
       currentMonth.getMonth(),
       day
-    ).toLocaleDateString();
-    return data.some(
-      (schedule) =>
-        new Date(schedule.date.seconds * 1000).toLocaleDateString() ===
-        formattedDate
+    );
+    console.log(
+      clickedDate.toLocaleString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      })
     );
   };
+
   return (
     <div className="md:w-1/2 max-w-xs mx-auto md:max-w-full md:mx-0 md:ml-8 md:self-start">
       <div className="m-4">
@@ -88,21 +109,28 @@ export default function Calendar() {
             {''}
           </div>
         ))}
-        {days.map((day) => (
+        {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => (
           <div
             key={day}
-            className={`text-center text-sm font-medium rounded-md ${
+            className={`text-center text-xl font-medium rounded-sm ${
               isDateTaken(day)
-                ? 'bg-accent text-white' // Change to red color for taken dates
+                ? 'bg-accent text-white cursor-not-allowed' // Change to red color for taken dates
                 : day === new Date().getDate()
-                ? 'bg-secondary text-white'
-                : 'bg-primary'
+                ? 'bg-secondary text-white '
+                : 'bg-primary hover:bg-slate-400 hover:cursor-pointer'
             }`}
           >
-            {day}
+            <button
+              onClick={() => handleDayClick(day)}
+              disabled={isDateTaken(day)}
+            >
+              {day}
+            </button>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
+
+export default Calendar;
