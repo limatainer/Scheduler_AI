@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { projectFirestore } from '../firebase/config';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Review from '../components/Review';
 
@@ -9,12 +9,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdOutlineReviews, MdScheduleSend } from 'react-icons/md';
 import { VscGitPullRequestNewChanges } from 'react-icons/vsc';
-import Fruits from '../components/Fruits';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function HomeUser() {
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
+
+  // // checks user
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate('/');
+  //   }
+  // }, [user, navigate]);
 
   //THIS USER EFFECT IS TO DISPLAY THE REVIEWS COLLECTION FROM FIRESTORE
   useEffect(() => {
@@ -47,6 +56,7 @@ export default function HomeUser() {
 
   const [selectedId, setSelectedId] = useState(null);
 
+  //options items
   const items = [
     {
       id: 1,
@@ -67,9 +77,12 @@ export default function HomeUser() {
       icon: <MdOutlineReviews className="text-4xl" />,
     },
   ];
+
+  //used for this animation framer motion
   const handleOverlayClick = (e) => {
     e.stopPropagation(); // Prevent the event from propagating to parent elements
   };
+
   return (
     <>
       <div className="bg-yellow-50 sm:py-16 lg:py-25 pb-10">
@@ -79,7 +92,7 @@ export default function HomeUser() {
         >
           <div className="max-w-xl mb-10 text-center">
             <h1 className="text-7xl font-bold ">
-              Welcome, <span className="text-tertiary">User</span>
+              Welcome, <span className="text-tertiary">{user.displayName}</span>
             </h1>
             <h2
               className="max-w-lg mb-6 p-4 font-sans text-3xl font-bold 

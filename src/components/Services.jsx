@@ -49,7 +49,7 @@ export default function Services() {
             </div>
             <h6 className="mb-2 font-semibold leading-5">Style</h6>
             <p className="text-sm text-gray-700">
-              Hair stylist and nail polishment
+              Hair stylist and nail polisher
             </p>
           </div>
           <div className="max-w-md">
