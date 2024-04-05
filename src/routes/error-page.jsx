@@ -17,7 +17,7 @@ export default function ErrorPage() {
 
   return (
     <section
-      className="flex items-center h-full sm:p-16 bg-primary 
+      className="flex min-h-screen w-screen items-center h-full sm:p-16 bg-primary 
     text-accent"
     >
       <div
@@ -29,7 +29,7 @@ export default function ErrorPage() {
           Looks like this page services is currently offline.
         </p>
         <p>
-          Redirecting to the <Link to="/">Home</Link> page...
+          Redirecting to <Link to="/">Home</Link> page...
         </p>
       </div>
     </section>

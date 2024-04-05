@@ -5,34 +5,31 @@ import Services from '../components/Services';
 import Stats from '../components/Stats';
 import Steps from '../components/Steps';
 import Review from '../components/Review';
-import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function Home() {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
-  const { user } = useAuthContext();
-  const navigate = useNavigate();
+
   //THIS USER EFFECT IS TO DISPLAY THE REVIEWS COLLECTION FROM FIRESTORE
+  // AFTER LOADED IT WILL PASS DATA TO REVIEW COMPONENT AS REVIEWS
   useEffect(() => {
-    if (!user) {
-      return; // Exit early if there's no user
-    }
-    setIsPending(true); // Set isPending to true only if there's a user
-    navigate('/homeuser');
+    setIsPending(true);
+
     const unsub = projectFirestore.collection('reviews').onSnapshot(
       (snapshot) => {
         if (snapshot.empty) {
           setError('No reviews to load');
+          setIsPending(false);
         } else {
           let results = [];
           snapshot.docs.forEach((doc) => {
+            // console.log(doc)
             results.push({ ...doc.data(), id: doc.id });
           });
           setData(results);
+          setIsPending(false);
         }
-        setIsPending(false); // set isPending to false after data retrieval
       },
       (err) => {
         setError(err.message);
@@ -41,17 +38,16 @@ export default function Home() {
     );
 
     return () => unsub();
-  }, [user, navigate]);
+  }, []);
 
-  // AFTER LOADED IT WILL PASS DATA TO REVIEW COMPONENT AS REVIEWS
   return (
     <>
-      <Stats />
       <Services />
+      <Stats />
       <div className="text-center">
         {error && <p className="text-accent">{error}</p>}
         {isPending && <p className="text-primary">Loading...</p>}
-        {user && data && <Review reviews={data} />}
+        {data && <Review reviews={data} />}
       </div>
       <Steps />
     </>

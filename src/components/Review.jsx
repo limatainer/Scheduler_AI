@@ -24,32 +24,41 @@ export default function Review({ reviews }) {
   const review = reviews[currentIndex];
 
   return (
-    <div
-      key={review.id}
-      className="container flex flex-col w-full max-w-lg p-6 
-      mx-auto bg-white border border-primary rounded-md shadow-md"
-    >
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex space-x-4">
-          <div>
-            <img
-              src={getRandomAvatarUrl()}
-              alt="Avatar"
-              className="object-cover w-12 h-12 rounded-full bg-gray-500"
-            />
+    <div className="p-12 m-8 w-screen ">
+      <h1
+        className=" font-sans text-6xl font-bold 
+         text-secondary sm:text-5xl"
+      >
+        Our users approve
+      </h1>
+
+      <div
+        key={review.id}
+        className="container flex flex-col m-12 w-full max-w-lg p-6 
+      mx-auto bg-white border border-primary rounded-3xl shadow-xl animate-pulse"
+      >
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex space-x-4">
+            <div>
+              <img
+                src={getRandomAvatarUrl()}
+                alt="Avatar"
+                className="object-cover w-12 h-12 rounded-full bg-gray-500"
+              />
+            </div>
+            <div>
+              <h4 className="font-bold">{review.name}</h4>
+              <span className="text-xs text-gray-600">Approved service</span>
+            </div>
           </div>
-          <div>
-            <h4 className="font-bold">{review.name}</h4>
-            <span className="text-xs text-gray-600">Approved service</span>
+          <div className="flex items-center space-x-2 text-primary">
+            <FaRegStar />
+            <span className="text-xl font-bold">{review.star}</span>
           </div>
         </div>
-        <div className="flex items-center space-x-2 text-primary">
-          <FaRegStar />
-          <span className="text-xl font-bold">{review.star}</span>
+        <div className="text-sm text-gray-800">
+          <p>{review.message}</p>
         </div>
-      </div>
-      <div className="text-sm text-gray-800">
-        <p>{review.message}</p>
       </div>
     </div>
   );

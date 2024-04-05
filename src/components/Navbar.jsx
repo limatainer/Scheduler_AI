@@ -16,16 +16,19 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
+    if (user) {
+      navigate('/homeuser');
+    } else {
       navigate('/');
     }
   }, [user, navigate]);
 
+  const handleCloseMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <div
-      className="px-4 py-6 mx-auto lg:py-8 sm:max-w-xl md:max-w-full 
-    lg:max-w-screen-xl md:px-24 lg:px-8"
-    >
+    <div className="bg-gray-50 fixed top-0 left-0 w-full p-3 z-50">
       <div className="relative flex items-center justify-between lg:justify-center lg:space-x-16">
         <ul className="items-center hidden space-x-8 lg:flex">
           {/* If user conditions */}
@@ -71,7 +74,7 @@ export default function Navbar() {
                 Hello, {user.displayName}
               </li>
               <li className="font-medium tracking-wide text-gray-700 group transition duration-300">
-                <Link to="/">
+                <Link to="/homeuser">
                   Dashboard
                   <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-tertiary"></span>
                 </Link>
@@ -123,7 +126,7 @@ export default function Navbar() {
                     className="p-2 -mt-2 -mr-2 transition duration-200 
                       rounded hover:bg-gray-200 focus:bg-gray-200 
                       focus:outline-none focus:shadow-outline"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={handleCloseMenu}
                   >
                     <TfiClose className="w-5 text-gray-600" />
                   </button>
@@ -135,7 +138,7 @@ export default function Navbar() {
                     {!user && (
                       <>
                         <li
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={handleCloseMenu}
                           className="inline-flex items-center justify-center w-full 
                     h-12 px-6 font-medium tracking-wide transition duration-200 
                     rounded shadow-md hover:bg-secondary 
@@ -147,7 +150,7 @@ export default function Navbar() {
                           </Link>
                         </li>
                         <li
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={handleCloseMenu}
                           className="inline-flex items-center justify-center w-full 
                     h-12 px-6 font-medium tracking-wide transition duration-200 
                     rounded shadow-md hover:bg-secondary 
@@ -159,7 +162,7 @@ export default function Navbar() {
                           </Link>
                         </li>
                         <li
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={handleCloseMenu}
                           className="inline-flex items-center justify-center w-full 
                     h-12 px-6 font-medium tracking-wide transition duration-200 
                     rounded shadow-md hover:bg-secondary 
@@ -183,7 +186,7 @@ export default function Navbar() {
                           Hello, {user.displayName}
                         </li>
                         <li
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={handleCloseMenu}
                           className="inline-flex items-center justify-center w-full 
                     h-12 px-6 font-medium tracking-wide transition duration-200 
                     rounded shadow-md hover:bg-secondary 
@@ -195,7 +198,7 @@ export default function Navbar() {
                           </Link>
                         </li>
                         <li
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={handleCloseMenu}
                           className="inline-flex items-center justify-center w-full 
                     h-12 px-6 font-medium tracking-wide transition duration-200 
                     rounded shadow-md hover:bg-secondary 
@@ -207,7 +210,7 @@ export default function Navbar() {
                           </Link>
                         </li>
                         <li
-                          onClick={() => setIsMenuOpen(false)}
+                          onClick={handleCloseMenu}
                           className="inline-flex items-center justify-center w-full 
                     h-12 px-6 font-medium tracking-wide transition duration-200 
                     rounded shadow-md hover:bg-secondary 

@@ -1,21 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLogin } from '../hooks/useLogin';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, error, isPending, setError } = useLogin(); // Destructure error and setError from useLogin
-
-  const { user } = useAuthContext();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      navigate('/homeuser');
-    }
-  }, [user, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -3,12 +3,12 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBJo8Dv9Xs81nw7z6vMN2V-kCFIHIFm1RA',
-  authDomain: 'scheduler-5dd12.firebaseapp.com',
-  projectId: 'scheduler-5dd12',
-  storageBucket: 'scheduler-5dd12.appspot.com',
-  messagingSenderId: '755939209208',
-  appId: '1:755939209208:web:a7b915ee0a91867a7b700d',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

@@ -13,22 +13,14 @@ import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function HomeUser() {
   const { user } = useAuthContext();
-  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
 
-  // // checks user
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate('/');
-  //   }
-  // }, [user, navigate]);
-
   //THIS USER EFFECT IS TO DISPLAY THE REVIEWS COLLECTION FROM FIRESTORE
+  // AFTER LOADED IT WILL PASS DATA TO REVIEW COMPONENT AS REVIEWS
   useEffect(() => {
     setIsPending(true);
-
     const unsub = projectFirestore.collection('reviews').onSnapshot(
       (snapshot) => {
         if (snapshot.empty) {
@@ -52,10 +44,8 @@ export default function HomeUser() {
 
     return () => unsub();
   }, []);
-  // AFTER LOADED IT WILL PASS DATA TO REVIEW COMPONENT AS REVIEWS
 
   const [selectedId, setSelectedId] = useState(null);
-
   //options items
   const items = [
     {
@@ -78,7 +68,7 @@ export default function HomeUser() {
     },
   ];
 
-  //used for this animation framer motion
+  //framer motion
   const handleOverlayClick = (e) => {
     e.stopPropagation(); // Prevent the event from propagating to parent elements
   };
@@ -188,9 +178,6 @@ export default function HomeUser() {
         {isPending && <p className="text-primary">Loading...</p>}
         {data && <Review reviews={data} />}
       </div>
-      {/* <div className="fruits">
-        <Fruits />
-      </div> */}
     </>
   );
 }
