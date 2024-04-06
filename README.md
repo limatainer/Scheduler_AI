@@ -26,7 +26,7 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](frontend/gif_web.gif)
+![screenshot](scheduler.gif)
 
 ## Objective
 
