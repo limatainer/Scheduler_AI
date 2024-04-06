@@ -7,12 +7,12 @@ import { MdSportsGymnastics } from 'react-icons/md';
 
 export default function Services() {
   return (
-    <section className="px-4 py-8 sm:py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+    <section className="px-4 py-8 mt-24 sm:py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
       <div className="flex flex-col lg:flex-row">
-        <header className="max-w-xl w-full lg:w-1/2 pr-4 lg:pr-16 mx-auto mb-10">
-          <h5 className="mb-6 text-3xl font-extrabold leading-none">
+        <header className="max-w-xl w-full lg:w-1/2 pr-4 lg:pr-16 mx-auto mb-10 flex flex-col items-center lg:items-start">
+          <h1 className="mb-6 text-5xl font-extrabold leading-none">
             Welcome to our Service Appointment page!
-          </h5>
+          </h1>
           <p className="mb-6 text-gray-900">
             Experience top-notch service crafted specifically for your needs.
             Whether you're reaching out for the first time or you're already
@@ -33,7 +33,7 @@ export default function Services() {
             </p>
           </div>
         </header>
-        <div className="grid gap-5 row-gap-5 sm:grid-cols-2 lg:w-1/2">
+        <div className="grid gap-5 row-gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
           <div className="max-w-md">
             <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-primary">
               <IoBarbellOutline className="text-3xl" />

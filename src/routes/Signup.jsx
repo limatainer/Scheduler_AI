@@ -24,8 +24,8 @@ export default function Signup() {
       <div className="flex flex-col w-full max-w-md p-12 space-y-4 text-center bg-gray-100 rounded-lg">
         <h1 className="text-3xl font-semibold">Create an Account</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col">
-            <label htmlFor="email" className="text-gray-400">
+          <div className="flex flex-col ">
+            <label htmlFor="email" className="text-gray-400 mt-4">
               Email address
               <input
                 type="email"
@@ -35,10 +35,10 @@ export default function Signup() {
                 required
                 placeholder="Email address"
                 autoComplete="username"
-                className="my-4 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
+                className="ml-2 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
               />
             </label>
-            <label htmlFor="password" className="text-gray-400">
+            <label htmlFor="password" className="text-gray-400 mt-4">
               Password
               <input
                 id="password"
@@ -48,10 +48,10 @@ export default function Signup() {
                 value={password}
                 placeholder="Password"
                 autoComplete="new-password"
-                className="my-4 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
+                className="ml-2 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
               />
             </label>
-            <label htmlFor="confirmPassword" className="text-gray-400">
+            <label htmlFor="confirmPassword" className="text-gray-400 mt-4">
               Confirm Password
               <input
                 id="confirmPassword"
@@ -61,10 +61,10 @@ export default function Signup() {
                 value={confirmPassword}
                 placeholder="Confirm Password"
                 autoComplete="new-password"
-                className="my-4 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
+                className="ml-2 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
               />
             </label>
-            <label htmlFor="displayName" className="text-gray-400">
+            <label htmlFor="displayName" className="text-gray-400 mt-4">
               Display Name
               <input
                 type="text"
@@ -73,7 +73,7 @@ export default function Signup() {
                 id="displayName"
                 required
                 placeholder="Display Name"
-                className="my-4 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
+                className="ml-2 rounded-t-md border-gray-600 focus:ri focus:border-violet-400"
               />
             </label>
           </div>
@@ -87,6 +87,7 @@ export default function Signup() {
               Loading
             </button>
           )}
+          {/* use sweet alert here */}
           {passwordMatchError && (
             <p className="text-red-500">Passwords do not match.</p>
           )}

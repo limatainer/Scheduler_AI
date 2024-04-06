@@ -24,42 +24,62 @@ export default function Review({ reviews }) {
   const review = reviews[currentIndex];
 
   return (
-    <div className="p-12 m-8 w-screen ">
-      <h1
-        className=" font-sans text-6xl font-bold 
-         text-secondary sm:text-5xl"
-      >
-        Our users approve
-      </h1>
+    <section className="py-24 relative">
+      <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
+        <h1 className="font-bold text-5xl text-black text-center mb-11">
+          People Love Us
+        </h1>
 
-      <div
-        key={review.id}
-        className="container flex flex-col m-12 w-full max-w-lg p-6 
-      mx-auto bg-white border border-primary rounded-3xl shadow-xl animate-pulse"
-      >
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex space-x-4">
-            <div>
-              <img
-                src={getRandomAvatarUrl()}
-                alt="Avatar"
-                className="object-cover w-12 h-12 rounded-full bg-gray-500"
-              />
+        <div className="grid grid-cols-1 gap-8">
+          {/* Firebase Reviews */}
+          <div className="grid grid-cols-12 max-w-sm sm:max-w-full mx-auto bg-slate-50 rounded-md shadow-sm p-4">
+            <div className="col-span-12 lg:col-span-10">
+              <div className="sm:flex gap-6">
+                <img
+                  src="https://pagedone.io/asset/uploads/1704364459.png"
+                  alt="Robert image"
+                  className="w-32 h-32"
+                />
+                <div className="text flex flex-col justify-center items-center">
+                  <p className="font-medium text-2xl leading-8 text-gray-900 mb-2">
+                    {review.name}
+                  </p>
+                  {/* Stars */}
+                  <p>rate: {review.star}</p>
+                  <div className="flex lg:hidden items-center gap-2 lg:justify-between w-full mb-5">
+                    <FaRegStar className="icons" />
+                    <FaRegStar className="icons" />
+                    <FaRegStar className="icons" />
+                    <FaRegStar className="icons" />
+                    <FaRegStar className="icons" />
+                  </div>
+                  <p className="font-normal text-base leading-7 text-gray-400 mb-4 lg:text-center">
+                    {review.message}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="lg:hidden font-medium text-sm leading-7 text-gray-400 lg:text-center whitespace-nowrap">
+                      Nov 01, 2023
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <h4 className="font-bold">{review.name}</h4>
-              <span className="text-xs text-gray-600">Approved service</span>
+            <div className="col-span-12 lg:col-span-2 max-lg:hidden flex lg:items-center flex-row lg:flex-col justify-center max-lg:pt-6">
+              <div className="flex items-center gap-2 lg:justify-between w-full mb-5">
+                <FaRegStar className="icons" />
+                <FaRegStar className="icons" />
+                <FaRegStar className="icons" />
+                <FaRegStar className="icons" />
+                <FaRegStar className="icons" />
+              </div>
+              <p className="font-medium text-lg leading-8 text-gray-400 lg:text-center whitespace-nowrap">
+                Nov 01, 2023
+              </p>
             </div>
           </div>
-          <div className="flex items-center space-x-2 text-primary">
-            <FaRegStar />
-            <span className="text-xl font-bold">{review.star}</span>
-          </div>
-        </div>
-        <div className="text-sm text-gray-800">
-          <p>{review.message}</p>
+          <div className="pb-8 border-b border-gray-100 w-full"></div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

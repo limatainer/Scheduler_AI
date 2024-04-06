@@ -11,10 +11,10 @@ const passos = [
   {
     id: 1,
     step: 'Step 1',
-    icon: <MdScheduleSend className="text-2xl" />,
+    icon: <MdScheduleSend className="text-2xl animate-pulse" />,
     description:
       'Navigate to our availability panel and check what time and date best fits you.',
-    moveright: <FaArrowRightLong className="text-4xl" />,
+    moveright: <FaArrowRightLong className="text-4xl animate-bounce" />,
   },
   {
     id: 2,
@@ -22,12 +22,12 @@ const passos = [
     icon: <GiConfirmed className="text-2xl" />,
     description:
       'Navigate to our request panel, select your preferred date and time, compose a quick message, and hit submit. Within moments, you will receive a confirmation.',
-    moveright: <FaArrowRightLong className="text-4xl" />,
+    moveright: <FaArrowRightLong className="text-4xl animate-bounce" />,
   },
   {
     id: 3,
     step: 'Step 3',
-    icon: <TiMessages className="text-2xl" />,
+    icon: <TiMessages className="text-2xl animate-pulse" />,
     description:
       'It is that easy! Almost instantly, a confirmation message will land in your inbox. Simplify your scheduling process with our swift and straightforward approach.',
     moveright: '',
@@ -45,7 +45,7 @@ export default function Steps() {
           className="max-w-lg mb-6 font-sans text-6xl font-bold 
         leading-none tracking-tight text-gray-900 sm:text-5xl md:mx-auto"
         >
-          <span className="relative inline-block">
+          <span className="relative inline-block mb-8">
             <Grid />
             <span className="relative text-tertiary">
               Effortless and Efficient:{' '}
@@ -67,8 +67,8 @@ export default function Steps() {
             >
               {passo.icon}
             </div>
-            <h6 className="mb-2 text-3xl font-extrabold">{passo.step}</h6>
-            <p className="max-w-md mb-3 text-sm text-gray-900 sm:mx-auto">
+            <h6 className="mb-6 text-3xl font-extrabold">{passo.step}</h6>
+            <p className="text-left max-w-md mb-3 text-md text-gray-900 sm:mx-auto">
               {passo.description}
             </p>
 
