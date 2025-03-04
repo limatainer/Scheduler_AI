@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Grid from '../constant/Grid';
+import Grid from './Grid';
 
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { MdScheduleSend } from 'react-icons/md';

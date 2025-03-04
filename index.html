@@ -1,13 +1,74 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scheduler</title>
+    
+    <!-- Favicon and app icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Base SEO -->
+    <title>Scheduler App - Manage Your Appointments Efficiently</title>
+    <meta name="description" content="Schedule and manage appointments, meetings, and events with our easy-to-use scheduling software. Perfect for businesses and individuals." />
+    <meta name="keywords" content="scheduler, appointment, booking, calendar, management, events" />
+    <meta name="author" content="Scheduler App" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-scheduler-app.com/" />
+    <meta property="og:title" content="Scheduler App - Manage Your Appointments Efficiently" />
+    <meta property="og:description" content="Schedule and manage appointments, meetings, and events with our easy-to-use scheduling software. Perfect for businesses and individuals." />
+    <meta property="og:image" content="https://your-scheduler-app.com/og-image.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://your-scheduler-app.com/" />
+    <meta property="twitter:title" content="Scheduler App - Manage Your Appointments Efficiently" />
+    <meta property="twitter:description" content="Schedule and manage appointments, meetings, and events with our easy-to-use scheduling software. Perfect for businesses and individuals." />
+    <meta property="twitter:image" content="https://your-scheduler-app.com/twitter-image.jpg" />
+    
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Theme color for browser UI -->
+    <meta name="theme-color" content="#6366f1" />
+    
+    <!-- Preload fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@300;400;500;600;700&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@300;400;500;600;700&display=swap" />
+    
+    <!-- Accessibility -->
+    <script>
+      // Check if user has a preference for reduced motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        document.documentElement.classList.add('reduce-motion');
+      }
+      
+      // Initialize dark mode based on user preference
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('theme');
+      
+      if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- No-JS fallback -->
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>This application requires JavaScript to function. Please enable JavaScript in your browser settings and reload the page.</p>
+      </div>
+    </noscript>
+    
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

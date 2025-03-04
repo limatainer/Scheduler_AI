@@ -1,0 +1,93 @@
+/* Font imports are in compatibility.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 transition-colors duration-200 ease-in-out;
+  }
+
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-semibold;
+  }
+}
+
+@layer components {
+  /* Improved contrast for dark mode text */
+  .dark .text-dark {
+    @apply text-gray-100;
+  }
+
+  /* Improved contrast for auth forms */
+  .auth-form-container {
+    @apply w-full max-w-md rounded-lg bg-white p-8 shadow-lg dark:bg-gray-800;
+  }
+
+  /* Typography with better dark mode contrast */
+  .title-text {
+    @apply text-3xl font-bold text-gray-900 dark:text-white;
+  }
+
+  .subtitle-text {
+    @apply text-xl text-gray-700 dark:text-gray-200;
+  }
+
+  .body-text {
+    @apply text-gray-600 dark:text-gray-300;
+  }
+
+  .small-text {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  /* Button styles with better contrast */
+  .button {
+    @apply inline-flex items-center justify-center rounded-lg bg-primary-600 px-5 py-2.5 text-center font-medium text-white shadow-md transition-all duration-300 ease-in-out hover:bg-primary-700 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-800;
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center rounded-lg bg-secondary-600 px-5 py-2.5 text-center font-medium text-white shadow-md transition-all duration-300 ease-in-out hover:bg-secondary-700 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-secondary-300 dark:bg-secondary-500 dark:hover:bg-secondary-600 dark:focus:ring-secondary-800;
+  }
+
+  .button-accent {
+    @apply inline-flex items-center justify-center rounded-lg bg-accent-600 px-5 py-2.5 text-center font-medium text-white shadow-md transition-all duration-300 ease-in-out hover:bg-accent-700 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-accent-300 dark:bg-accent-500 dark:hover:bg-accent-600 dark:focus:ring-accent-800;
+  }
+
+  .button-outline {
+    @apply inline-flex items-center justify-center rounded-lg border border-gray-300 bg-transparent px-5 py-2.5 text-center font-medium text-gray-700 shadow-md transition-all duration-300 ease-in-out hover:bg-gray-100 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700;
+  }
+
+  /* Input fields with better dark mode contrast */
+  .input {
+    @apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500;
+  }
+
+  /* Card component with better dark mode styling */
+  .card {
+    @apply rounded-xl bg-white p-6 shadow-lg transition-all duration-300 ease-in-out dark:bg-gray-800;
+  }
+
+  /* Icon styling with better dark mode contrast */
+  .icons {
+    @apply text-2xl text-primary-600 dark:text-primary-400;
+  }
+
+  /* Service cards with proper dark mode contrast */
+  .service-card {
+    @apply flex flex-col items-center rounded-lg bg-white p-6 text-center shadow-md transition-all duration-300 ease-in-out hover:-translate-y-1 dark:bg-gray-800;
+  }
+
+  .service-card-icon {
+    @apply mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-100 text-primary-600 dark:bg-primary-900 dark:text-primary-300;
+  }
+}

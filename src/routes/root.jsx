@@ -1,13 +1,17 @@
-import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import React, { useEffect } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import Layout from '../components/layout/Layout';
+const Root = () => {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
-export default function Root() {
   return (
-    <>
-      <Navbar />
+    <Layout>
       <Outlet />
-      <Footer />
-    </>
+    </Layout>
   );
-}
+};
+
+export default Root;
