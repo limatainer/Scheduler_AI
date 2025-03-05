@@ -13,7 +13,6 @@ const Login = () => {
   const { login, user } = useAuthContext();
   const navigate = useNavigate();
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       navigate('/homeuser');
@@ -94,6 +93,7 @@ const Login = () => {
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                   placeholder="name@example.com"
                   value={email}
+                  autoComplete="email"
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
@@ -117,6 +117,7 @@ const Login = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
                   required
                 />
                 <button

@@ -3,6 +3,7 @@ import { projectFirestore } from '../firebase/config';
 import { Link } from 'react-router-dom';
 import { PageSEO } from '../components/ui/SEO';
 import Review from '../components/Review';
+import ReviewForm from '../components/ReviewForm';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import { MdOutlineReviews, MdScheduleSend } from 'react-icons/md';
@@ -17,8 +18,6 @@ export default function HomeUser() {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
 
-  // THIS USER EFFECT IS TO DISPLAY THE REVIEWS COLLECTION FROM FIRESTORE
-  // AFTER LOADED IT WILL PASS DATA TO REVIEW COMPONENT AS REVIEWS
   useEffect(() => {
     setIsPending(true);
     const unsub = projectFirestore.collection('reviews').onSnapshot(
@@ -50,7 +49,7 @@ export default function HomeUser() {
   const items = [
     {
       id: 1,
-      title: 'See your request',
+      title: 'See your requests',
       subtitle: 'Quick view here your current schedule',
       icon: (
         <MdScheduleSend className="text-4xl text-primary-600 dark:text-primary-400" />
@@ -59,8 +58,8 @@ export default function HomeUser() {
     },
     {
       id: 2,
-      title: 'New request',
-      subtitle: 'Make a new request',
+      title: 'Add request',
+      subtitle: 'Set up a new schedule request',
       icon: (
         <VscGitPullRequestNewChanges className="text-4xl text-primary-600 dark:text-primary-400" />
       ),
@@ -79,13 +78,24 @@ export default function HomeUser() {
 
   // framer motion
   const handleOverlayClick = (e) => {
-    e.stopPropagation(); // Prevent the event from propagating to parent elements
+    e.stopPropagation();
   };
 
   const openCard = (item) => {
     setSelectedId(item.id);
     showInfo(`Opening ${item.title}`);
   };
+
+  // Check if the user has already submitted a review
+  const [hasReviewed, setHasReviewed] = useState(false);
+
+  useEffect(() => {
+    if (!user || !data) return;
+
+    // Check if the current user has already submitted a review
+    const userReview = data.find((review) => review.userId === user.uid);
+    setHasReviewed(!!userReview);
+  }, [user, data]);
 
   return (
     <>
@@ -141,6 +151,11 @@ export default function HomeUser() {
                     <p className="text-gray-600 dark:text-gray-300">
                       {item.subtitle}
                     </p>
+                    {item.id === 3 && hasReviewed && (
+                      <span className="inline-block px-3 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300">
+                        Thank you for your review!
+                      </span>
+                    )}
                   </motion.div>
                 ))}
               </div>
@@ -170,15 +185,40 @@ export default function HomeUser() {
                   <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
                     {items.find((item) => item.id === selectedId)?.title}
                   </h3>
-                  <p className="text-center mb-6 text-gray-600 dark:text-gray-300">
-                    {items.find((item) => item.id === selectedId)?.subtitle}
-                  </p>
-                  <Link
-                    to={items.find((item) => item.id === selectedId)?.link}
-                    className="button w-full flex justify-center"
-                  >
-                    Proceed
-                  </Link>
+
+                  {/* Show form for review, otherwise show regular content */}
+                  {selectedId === 3 ? (
+                    hasReviewed ? (
+                      <div className="text-center mb-6">
+                        <p className="text-gray-700 dark:text-gray-300 mb-4">
+                          You've already submitted a review. Thank you for your
+                          feedback!
+                        </p>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">
+                          If you'd like to update your review, please contact
+                          support.
+                        </p>
+                      </div>
+                    ) : (
+                      <ReviewForm
+                        user={user}
+                        onClose={() => setSelectedId(null)}
+                      />
+                    )
+                  ) : (
+                    <>
+                      <p className="text-center mb-6 text-gray-600 dark:text-gray-300">
+                        {items.find((item) => item.id === selectedId)?.subtitle}
+                      </p>
+                      <Link
+                        to={items.find((item) => item.id === selectedId)?.link}
+                        className="button w-full flex justify-center"
+                      >
+                        Proceed
+                      </Link>
+                    </>
+                  )}
+
                   <button
                     className="absolute top-4 right-4 p-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600"
                     onClick={() => setSelectedId(null)}
