@@ -1,13 +1,22 @@
 import { projectFirestore } from '../firebase/config';
 import { GoDot } from 'react-icons/go';
 import { CiTrash } from 'react-icons/ci';
-import { FiClock, FiCheck, FiEye, FiCalendar } from 'react-icons/fi';
+import {
+  FiClock,
+  FiCheck,
+  FiEye,
+  FiCalendar,
+  FiToggleLeft,
+  FiToggleRight,
+} from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useState } from 'react';
+import { useNotification } from '../context/NotificationContext';
 
 export default function SchedulesView({ schedules, isAdmin }) {
   const { user } = useAuthContext();
+  const { showSuccess, showError } = useNotification();
   const [selectedSchedule, setSelectedSchedule] = useState(null);
 
   if (schedules.length === 0) {
@@ -58,19 +67,37 @@ export default function SchedulesView({ schedules, isAdmin }) {
       if (result.isConfirmed) {
         projectFirestore.collection('schedule').doc(id).delete();
         setSelectedSchedule(null);
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'Your request has been deleted.',
-          icon: 'success',
-          background: document.documentElement.classList.contains('dark')
-            ? '#1f2937'
-            : '#ffffff',
-          color: document.documentElement.classList.contains('dark')
-            ? '#f3f4f6'
-            : '#111827',
-        });
+        showSuccess('Request has been deleted.');
       }
     });
+  };
+
+  // Toggle completed status
+  const toggleCompletedStatus = async (schedule) => {
+    const newStatus = !schedule.completed;
+
+    try {
+      await projectFirestore.collection('schedule').doc(schedule.id).update({
+        completed: newStatus,
+      });
+
+      showSuccess(
+        newStatus
+          ? 'Appointment marked as completed.'
+          : 'Appointment marked as pending.'
+      );
+
+      // Update the selected schedule if it's currently viewed
+      if (selectedSchedule && selectedSchedule.id === schedule.id) {
+        setSelectedSchedule({
+          ...selectedSchedule,
+          completed: newStatus,
+        });
+      }
+    } catch (error) {
+      console.error('Error updating status:', error);
+      showError('Failed to update status. Please try again.');
+    }
   };
 
   // View full details
@@ -83,19 +110,25 @@ export default function SchedulesView({ schedules, isAdmin }) {
     setSelectedSchedule(null);
   };
 
-  // Get status based on date
-  const getStatus = (date) => {
+  // Get status based on date and completed field
+  const getStatus = (schedule) => {
     const now = new Date();
-    const scheduleDate = new Date(date.seconds * 1000);
+    const scheduleDate = new Date(schedule.date.seconds * 1000);
+    const isDatePassed = scheduleDate < now;
+    const hasCompletedField = 'completed' in schedule;
 
-    if (scheduleDate < now) {
+    // If explicitly marked as completed
+    if (hasCompletedField && schedule.completed) {
       return {
         status: 'Completed',
         icon: <FiCheck className="text-green-500" />,
         color:
           'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
       };
-    } else {
+    }
+
+    // If explicitly marked as not completed or date not passed yet
+    if (!isDatePassed || (hasCompletedField && !schedule.completed)) {
       return {
         status: 'Pending',
         icon: <FiClock className="text-amber-500" />,
@@ -103,13 +136,22 @@ export default function SchedulesView({ schedules, isAdmin }) {
           'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400',
       };
     }
+
+    // Default for backward compatibility - date passed and no completed field
+    return {
+      status: 'Completed',
+      icon: <FiCheck className="text-green-500" />,
+      color:
+        'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+    };
   };
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-4 p-4">
         {filteredSchedules.map((schedule) => {
-          const { status, icon, color } = getStatus(schedule.date);
+          const { status, icon, color } = getStatus(schedule);
+          const hasCompletedField = 'completed' in schedule;
 
           return (
             <div
@@ -117,6 +159,26 @@ export default function SchedulesView({ schedules, isAdmin }) {
               className="relative bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 border border-gray-200 dark:border-gray-700 transition-all hover:shadow-lg"
             >
               <div className="absolute flex items-center gap-2 top-4 right-4">
+                {/* Toggle completed status button (only if date has passed) */}
+                {new Date(schedule.date.seconds * 1000) < new Date() && (
+                  <button
+                    onClick={() => toggleCompletedStatus(schedule)}
+                    className="p-2 rounded-full text-gray-600 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-700"
+                    title={
+                      hasCompletedField && schedule.completed
+                        ? 'Mark as pending'
+                        : 'Mark as completed'
+                    }
+                  >
+                    {hasCompletedField && schedule.completed ? (
+                      <FiToggleRight className="text-xl text-green-500" />
+                    ) : (
+                      <FiToggleLeft className="text-xl text-amber-500" />
+                    )}
+                  </button>
+                )}
+
+                {/* View details button */}
                 <button
                   onClick={() => viewDetails(schedule)}
                   className="p-2 rounded-full text-gray-600 hover:text-primary-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-700"
@@ -124,6 +186,8 @@ export default function SchedulesView({ schedules, isAdmin }) {
                 >
                   <FiEye className="text-xl" />
                 </button>
+
+                {/* Delete button */}
                 <button
                   onClick={() => deleteRequest(schedule.id)}
                   className="p-2 rounded-full text-gray-600 hover:text-red-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-red-400 dark:hover:bg-gray-700"
@@ -131,6 +195,8 @@ export default function SchedulesView({ schedules, isAdmin }) {
                 >
                   <CiTrash className="text-xl" />
                 </button>
+
+                {/* New request indicator */}
                 {schedule.id === mostRecentSchedule.id && (
                   <GoDot className="text-xl absolute -top-1 -right-1 animate-ping text-accent-600 dark:text-accent-400" />
                 )}
@@ -239,6 +305,57 @@ export default function SchedulesView({ schedules, isAdmin }) {
                     minute: '2-digit',
                   })}
                 </p>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Status
+                </label>
+                <div className="mt-2">
+                  {new Date(selectedSchedule.date.seconds * 1000) <
+                  new Date() ? (
+                    <div className="flex items-center">
+                      <div
+                        className={`mr-3 flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                          getStatus(selectedSchedule).color
+                        }`}
+                      >
+                        {getStatus(selectedSchedule).icon}
+                        {getStatus(selectedSchedule).status}
+                      </div>
+
+                      <button
+                        onClick={() => toggleCompletedStatus(selectedSchedule)}
+                        className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-full text-gray-700 dark:text-gray-300"
+                      >
+                        {'completed' in selectedSchedule &&
+                        selectedSchedule.completed ? (
+                          <>
+                            <FiToggleRight className="text-green-500" />
+                            <span>Mark as pending</span>
+                          </>
+                        ) : (
+                          <>
+                            <FiToggleLeft className="text-amber-500" />
+                            <span>Mark as completed</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                        getStatus(selectedSchedule).color
+                      } max-w-max`}
+                    >
+                      {getStatus(selectedSchedule).icon}
+                      {getStatus(selectedSchedule).status}
+                      <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
+                        (Appointment is in the future)
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div>

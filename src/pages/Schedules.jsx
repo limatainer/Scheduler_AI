@@ -59,10 +59,19 @@ export default function Schedules() {
       setFilteredData(
         data.filter((schedule) => {
           const scheduleDate = new Date(schedule.date.seconds * 1000);
+          const isDatePassed = scheduleDate < now;
+          // Check if the schedule has a completed property
+          const hasCompletedProp = 'completed' in schedule;
+
           if (filterStatus === 'pending') {
-            return scheduleDate >= now;
+            // Consider as pending if date is in future OR (date is passed but marked as not completed)
+            return (
+              !isDatePassed ||
+              (isDatePassed && hasCompletedProp && !schedule.completed)
+            );
           } else {
-            return scheduleDate < now;
+            // Consider as completed if date is passed AND either no completed prop or completed is true
+            return isDatePassed && (!hasCompletedProp || schedule.completed);
           }
         })
       );
@@ -74,15 +83,35 @@ export default function Schedules() {
     if (!data) return { total: 0, pending: 0, completed: 0 };
 
     const now = new Date();
+
+    // Count pending items
     const pending = data.filter((schedule) => {
       const scheduleDate = new Date(schedule.date.seconds * 1000);
-      return scheduleDate >= now;
+      const isDatePassed = scheduleDate < now;
+      // If completed property exists, use it; otherwise, just check date
+      if ('completed' in schedule) {
+        return !isDatePassed || (isDatePassed && !schedule.completed);
+      } else {
+        return !isDatePassed; // Backward compatibility for items without completed prop
+      }
+    }).length;
+
+    // Count completed items
+    const completed = data.filter((schedule) => {
+      const scheduleDate = new Date(schedule.date.seconds * 1000);
+      const isDatePassed = scheduleDate < now;
+
+      if ('completed' in schedule) {
+        return isDatePassed && schedule.completed;
+      } else {
+        return isDatePassed; // Backward compatibility for items without completed prop
+      }
     }).length;
 
     return {
       total: data.length,
       pending,
-      completed: data.length - pending,
+      completed,
     };
   };
 
