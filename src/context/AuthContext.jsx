@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 import { projectAuth } from '../firebase/config';
 import { useLocalStorage } from '../hooks/useStorage';
-import { getAuthErrorMessage } from '../utils/errorUtils';
 export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
