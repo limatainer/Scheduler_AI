@@ -12,6 +12,7 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Error from '../pages/error-page';
 import Root from '../routes/root';
+import Services from '../pages/Services'; // Import the new Services page
 
 // Protected route component
 const ProtectedRoute = ({ element }) => {
@@ -57,6 +58,15 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <Signup />,
+      },
+      // Add routes for services
+      {
+        path: '/services',
+        element: <Services />,
+      },
+      {
+        path: '/services/:serviceId',
+        element: <Services />,
       },
       {
         path: '/*',
