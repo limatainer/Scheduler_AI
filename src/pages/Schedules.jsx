@@ -52,12 +52,17 @@ export default function Schedules() {
   useEffect(() => {
     if (!data) return;
 
+    // First, filter by user if not admin
+    const userSchedules = isAdmin
+      ? data
+      : data.filter((schedule) => user.uid === schedule.uid);
+
     if (filterStatus === 'all') {
-      setFilteredData(data);
+      setFilteredData(userSchedules);
     } else {
       const now = new Date();
       setFilteredData(
-        data.filter((schedule) => {
+        userSchedules.filter((schedule) => {
           const scheduleDate = new Date(schedule.date.seconds * 1000);
           const isDatePassed = scheduleDate < now;
           // Check if the schedule has a completed property
@@ -76,16 +81,21 @@ export default function Schedules() {
         })
       );
     }
-  }, [data, filterStatus]);
+  }, [data, filterStatus, isAdmin, user]);
 
-  // Get counts for badge displays
+  // Get counts for badge displays - UPDATED to filter by user first
   const getCounts = () => {
     if (!data) return { total: 0, pending: 0, completed: 0 };
+
+    // Filter data for current user if not admin
+    const userSchedules = isAdmin
+      ? data
+      : data.filter((schedule) => user.uid === schedule.uid);
 
     const now = new Date();
 
     // Count pending items
-    const pending = data.filter((schedule) => {
+    const pending = userSchedules.filter((schedule) => {
       const scheduleDate = new Date(schedule.date.seconds * 1000);
       const isDatePassed = scheduleDate < now;
       // If completed property exists, use it; otherwise, just check date
@@ -97,7 +107,7 @@ export default function Schedules() {
     }).length;
 
     // Count completed items
-    const completed = data.filter((schedule) => {
+    const completed = userSchedules.filter((schedule) => {
       const scheduleDate = new Date(schedule.date.seconds * 1000);
       const isDatePassed = scheduleDate < now;
 
@@ -109,7 +119,7 @@ export default function Schedules() {
     }).length;
 
     return {
-      total: data.length,
+      total: userSchedules.length,
       pending,
       completed,
     };
